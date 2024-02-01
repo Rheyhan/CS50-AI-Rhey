@@ -9,4 +9,6 @@ This respitory's used as an archive to track CS 50 AI progress.
 <img align="center" src=".img/Fumo.gif" width="600">
 </p>
 
+```
 Okay, bye!
+```
