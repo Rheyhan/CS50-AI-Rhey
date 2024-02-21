@@ -84,7 +84,7 @@ def main():
             print(f"{i + 1}: {person1} and {person2} starred in {movie}")
 
 
-#Better solution i think
+#Better solution i think (Breadth-First Search)
 def shortest_path(source, target):
     # make the first node
     initialize = Node(source, None, None)
@@ -97,37 +97,37 @@ def shortest_path(source, target):
     isexplored = set()
 
     while True:
-        
+
         # check if the frontier is empty
         if frontier.empty():
             return None
-        
+
         # Get Node and switch frontier
         thenode = frontier.remove()
         isexplored.add(thenode.state)
-        
+
         # Get Movie and ID affliated with thenode id
         for movie, id in neighbors_for_person(thenode.state):
-            
+
             # check if id isn't explored and frontier doesn't contain id.
             if id not in isexplored and not frontier.contains_state(id):
-            
+
                 # Get new node (child) of new id and movie and assign its parent node
                 child = Node(id, parent=thenode, action=movie)
                 isexplored.add(id)
-                
+
                 #check if child's id has the target
                 if child.state == target:
-                    
-                    # get path from parent to child. 
+
+                    # get path from parent to child.
                     pathway=[]
                     while child.parent is not None:
                         pathway.append((child.action, child.state))
                         child = child.parent
-                        
+
                     pathway.reverse()
                     return pathway
-                
+
                 # create a new frontier to child!
                 frontier.add(child)
 
