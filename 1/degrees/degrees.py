@@ -86,6 +86,11 @@ def main():
 
 #Better solution i think (Breadth-First Search)
 def shortest_path(source, target):
+    
+    #check if source is actualy target, if yes. It'll return len(path)==0
+    if source==target:
+        return []
+    
     # make the first node
     initialize = Node(source, None, None)
 
