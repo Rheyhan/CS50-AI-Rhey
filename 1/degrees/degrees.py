@@ -84,16 +84,52 @@ def main():
             print(f"{i + 1}: {person1} and {person2} starred in {movie}")
 
 
+#Better solution i think
 def shortest_path(source, target):
-    """
-    Returns the shortest list of (movie_id, person_id) pairs
-    that connect the source to the target.
+    # make the first node
+    initialize = Node(source, None, None)
 
-    If no possible path, returns None.
-    """
+    # create a frontier from
+    frontier = QueueFrontier()
+    frontier.add(initialize)
 
-    # TODO
-    raise NotImplementedError
+    # this is used for check if node's already explored or not. To prevent going to same node twice.
+    isexplored = set()
+
+    while True:
+        
+        # check if the frontier is empty
+        if frontier.empty():
+            return None
+        
+        # Get Node and switch frontier
+        thenode = frontier.remove()
+        isexplored.add(thenode.state)
+        
+        # Get Movie and ID affliated with thenode id
+        for movie, id in neighbors_for_person(thenode.state):
+            
+            # check if id isn't explored and frontier doesn't contain id.
+            if id not in isexplored and not frontier.contains_state(id):
+            
+                # Get new node (child) of new id and movie and assign its parent node
+                child = Node(id, parent=thenode, action=movie)
+                isexplored.add(id)
+                
+                #check if child's id has the target
+                if child.state == target:
+                    
+                    # get path from parent to child. 
+                    pathway=[]
+                    while child.parent is not None:
+                        pathway.append((child.action, child.state))
+                        child = child.parent
+                        
+                    pathway.reverse()
+                    return pathway
+                
+                # create a new frontier to child!
+                frontier.add(child)
 
 
 def person_id_for_name(name):
